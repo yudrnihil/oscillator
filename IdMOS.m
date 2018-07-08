@@ -3,10 +3,9 @@ function [ Ids ] = IdMOS( Vgs, Vds )
 %  https://www.mathworks.com/help/physmod/elec/ref/spicenmos.html
 %  Vt: kt/q
 %  Vth: threshold
-%  K: 1/2*u*Cox*W/L
+%  K: u*Cox*W/L
     Vt=25.9e-3;
     Vth=0.5;
-    %K=0.02;
     K=0.1;
     
     %{
