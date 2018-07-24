@@ -18,6 +18,16 @@ function [X,T] = autonomous(xInitial,TInitial,tstep,RLC,IVsource)
     error=xT-x0;
     errorsq=sum(error.^2)
     
+    count=0;
+
+    %plot this iteration
+    plot((1:length(phi0))*tstep,phi0(1:3,:))
+    set(gca,'FontSize',12,'FontWeight','Bold')
+    xlabel('Time (s)')
+    ylabel('Voltage (V)')
+    title(['Iteration ',num2str(count)])
+    pause(0.5)
+    
     while errorsq>errorthreshold
         [phi1]=tpz(x0+[dV;0;0;0;0],tstep,nstep,RLC,IVsource);
         [phi2]=tpz(x0+[0;dV;0;0;0],tstep,nstep,RLC,IVsource);
@@ -42,11 +52,22 @@ function [X,T] = autonomous(xInitial,TInitial,tstep,RLC,IVsource)
             x0=[v(1:k-1);x0(k);v(k+1:5)];
             T=v(k);
         end
+        T
         nstep=round(T/tstep);
         [phi0]=tpz(x0,tstep,nstep,RLC,IVsource);
         xT=phi0(:,nstep);
         error=xT-x0;
         errorsq=sum(error.^2)
+        
+        %plot this iteration
+        count=count+1;
+        plot((1:length(phi0))*tstep,phi0(1:3,:))
+        set(gca,'FontSize',12,'FontWeight','Bold')
+        xlabel('Time (s)')
+        ylabel('Voltage (V)')
+        title(['Iteration ',num2str(count)])
+        pause(0.5)
+        
     end
     X=phi0;
 end

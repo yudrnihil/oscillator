@@ -2,8 +2,8 @@
 
 %f0=1.59155GHz, Q=5
 RLC=struct('R',50,'L',1e-9,'C',1e-11,'Ctail',10e-14);
-ttran=1e-8; % initial transient simulation for 10ns
-tstep=1e-12;
+ttran=2e-9; % initial transient simulation for 10ns
+tstep=1e-13;
 nstep=ttran/tstep;
 
 %free running
@@ -19,6 +19,7 @@ xInitial=X(:,nstep); % use initial transient result as pss guess
 
 % pss for autonomous oscillator
 % T is also an unknown
-[X,T]=autonomous(xInitial,6200e-13,1e-13,RLC,IVsource);
-plot(1:length(X),X(1:3,:))
+close all
+[X,T]=autonomous(xInitial,5500e-13,tstep,RLC,IVsource);
+%plot((1:length(X))*tstep,X(1:3,:))
 T
